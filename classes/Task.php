@@ -13,16 +13,16 @@ class Task
     const ACTION_DONE = 'done';
     const ACTION_REFUSED = 'refused';
 
-    private $id;
-    private $role;
+    private $idCustomer;
+    private $idExecutor;
 
     public $currentStatus;
     public $currentAction;
 
-    public function __construct($id, $role)
+    public function __construct($idCustomer, $idExecutor = null)
     {
-        $this->id = $id;
-        $this->role = $role;
+        $this->idCustomer = $idCustomer;
+        $this->idExecutor = $idExecutor;
     }
 
     public function getMapStatuses()
@@ -56,9 +56,9 @@ class Task
         return $this->currentStatus;
     }
 
-    public function getAvailableActions()
+    public function getAvailableActions($role)
     {
-        if ($this->role === 'customer') {
+        if ($role === 'customer') {
             if ($this->currentStatus === STATUS_NEW) {
                 return self::ACTION_CANCEL;
             }
@@ -67,7 +67,7 @@ class Task
             }
             return null;
         }
-        if ($this->role === 'executor') {
+        if ($role === 'executor') {
             if ($this->currentStatus === STATUS_NEW) {
                 return self::ACTION_RESPOND;
             }
@@ -76,7 +76,5 @@ class Task
             }
             return null;
         }
-
     }
-
 }

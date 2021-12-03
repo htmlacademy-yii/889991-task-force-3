@@ -1,5 +1,5 @@
 <?php
-namespace TaskForse\business_logic;
+namespace Taskforce\logic;
 
 class Task
 {

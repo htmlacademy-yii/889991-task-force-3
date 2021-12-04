@@ -1,0 +1,16 @@
+{
+    "name": "yaroslav/889991-task-force-3",
+    "description": "y",
+    "authors": [
+        {
+            "name": "YaroslavSavele",
+            "email": "asis174@mail.ru"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+          "Taskforce\\": "src/"
+      }
+  },
+    "require": {}
+}

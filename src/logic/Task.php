@@ -1,4 +1,5 @@
 <?php
+namespace Taskforce\logic;
 
 class Task
 {

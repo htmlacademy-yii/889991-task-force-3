@@ -14,14 +14,16 @@ class Task
     const ACTION_DONE = 'done';
     const ACTION_REFUSED = 'refused';
 
+    private $idUser;
     private $idCustomer;
     private $idExecutor;
 
     public $currentStatus;
     public $currentAction;
 
-    public function __construct($idCustomer, $idExecutor = null)
+    public function __construct($idUser, $idCustomer, $idExecutor = null)
     {
+        $this->$idUser = $idUser;
         $this->idCustomer = $idCustomer;
         $this->idExecutor = $idExecutor;
     }
@@ -61,19 +63,19 @@ class Task
     {
         if ($role === 'customer') {
             if ($this->currentStatus === STATUS_NEW) {
-                return self::ACTION_CANCEL;
+                return new CancelAction();
             }
             if ($this->currentStatus === STATUS_WORKING) {
-                return self::ACTION_DONE;
+                return new RespondAction();
             }
             return null;
         }
         if ($role === 'executor') {
             if ($this->currentStatus === STATUS_NEW) {
-                return self::ACTION_RESPOND;
+                return new DoneAction();
             }
             if ($this->currentStatus === STATUS_WORKING) {
-                return self::ACTION_REFUSED;
+                return new RefusedAction();
             }
             return null;
         }

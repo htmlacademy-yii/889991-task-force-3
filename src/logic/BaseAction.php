@@ -6,14 +6,12 @@ abstract class BaseAction
     public $idUser;
     public $idCustomer;
     public $idExtcutor;
-    public $mapActions = [];
 
-    public function __construct($idUser, $idCustomer, $idExtcutor, $mapActions)
+    public function __construct($idUser, $idCustomer, $idExtcutor)
     {
-        $this->$idUser = $idUser;
-        $this->$idCustomer = $idCustomer;
-        $this->$idExtcutor = $idExtcutor;
-        $this->$mapActions = $mapActions;
+        $this->idUser = $idUser;
+        $this->idCustomer = $idCustomer;
+        $this->idExtcutor = $idExtcutor;
     }
 
     abstract public function verificationRights($idUser, $idCustomer, $idExtcutor);

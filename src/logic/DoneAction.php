@@ -5,13 +5,13 @@ class DoneAction extends BaseAction
 {
     public function verificationRights($idUser, $idCustomer, $idExtcutor)
     {
-        if ($this->$idUser === $this->$idCustomer) {
+        if ($idUser === $idCustomer) {
             return true;
         }
         return false;
     }
 
-    public function getTitle($mapActions)
+    public function getTitle()
     {
         return 'Задание выполнено';
     }

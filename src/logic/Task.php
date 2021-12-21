@@ -23,7 +23,7 @@ class Task
 
     public function __construct($idUser, $idCustomer, $idExecutor = null)
     {
-        $this->$idUser = $idUser;
+        $this->idUser = $idUser;
         $this->idCustomer = $idCustomer;
         $this->idExecutor = $idExecutor;
     }
@@ -62,20 +62,20 @@ class Task
     public function getAvailableActions($role)
     {
         if ($role === 'customer') {
-            if ($this->currentStatus === STATUS_NEW) {
-                return new CancelAction();
+            if ($this->currentStatus === self::STATUS_NEW) {
+                return new CancelAction($this->idUser, $this->idCustomer, $this->idExecutor);
             }
-            if ($this->currentStatus === STATUS_WORKING) {
-                return new RespondAction();
+            if ($this->currentStatus === self::STATUS_WORKING) {
+                return new DoneAction($this->idUser, $this->idCustomer, $this->idExecutor);
             }
             return null;
         }
         if ($role === 'executor') {
-            if ($this->currentStatus === STATUS_NEW) {
-                return new DoneAction();
+            if ($this->currentStatus === self::STATUS_NEW) {
+                return new RespondAction($this->idUser, $this->idCustomer, $this->idExecutor);
             }
-            if ($this->currentStatus === STATUS_WORKING) {
-                return new RefusedAction();
+            if ($this->currentStatus === self::STATUS_WORKING) {
+                return new RefusedAction($this->idUser, $this->idCustomer, $this->idExecutor);
             }
             return null;
         }

@@ -5,13 +5,13 @@ class RespondAction extends BaseAction
 {
     public function verificationRights($idUser, $idCustomer, $idExtcutor)
     {
-        if ($this->$idUser === $this->$idExtcutor) {
+        if ($idUser === $idExtcutor) {
             return true;
         }
         return false;
     }
 
-    public function getTitle($mapActions)
+    public function getTitle()
     {
         return 'Откликнуться на задание';
     }

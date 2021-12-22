@@ -14,14 +14,16 @@ class Task
     const ACTION_DONE = 'done';
     const ACTION_REFUSED = 'refused';
 
+    private $idUser;
     private $idCustomer;
     private $idExecutor;
 
     public $currentStatus;
     public $currentAction;
 
-    public function __construct($idCustomer, $idExecutor = null)
+    public function __construct($idUser, $idCustomer, $idExecutor = null)
     {
+        $this->idUser = $idUser;
         $this->idCustomer = $idCustomer;
         $this->idExecutor = $idExecutor;
     }
@@ -60,20 +62,20 @@ class Task
     public function getAvailableActions($role)
     {
         if ($role === 'customer') {
-            if ($this->currentStatus === STATUS_NEW) {
-                return self::ACTION_CANCEL;
+            if ($this->currentStatus === self::STATUS_NEW) {
+                return new CancelAction($this->idUser, $this->idCustomer, $this->idExecutor);
             }
-            if ($this->currentStatus === STATUS_WORKING) {
-                return self::ACTION_DONE;
+            if ($this->currentStatus === self::STATUS_WORKING) {
+                return new DoneAction($this->idUser, $this->idCustomer, $this->idExecutor);
             }
             return null;
         }
         if ($role === 'executor') {
-            if ($this->currentStatus === STATUS_NEW) {
-                return self::ACTION_RESPOND;
+            if ($this->currentStatus === self::STATUS_NEW) {
+                return new RespondAction($this->idUser, $this->idCustomer, $this->idExecutor);
             }
-            if ($this->currentStatus === STATUS_WORKING) {
-                return self::ACTION_REFUSED;
+            if ($this->currentStatus === self::STATUS_WORKING) {
+                return new RefusedAction($this->idUser, $this->idCustomer, $this->idExecutor);
             }
             return null;
         }

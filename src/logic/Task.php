@@ -1,6 +1,6 @@
 <?php
 namespace Taskforce\logic;
-
+use Taskforce\exceptions\CastomException;
 class Task
 {
     const STATUS_NEW = 'new';
@@ -21,14 +21,18 @@ class Task
     public $currentStatus;
     public $currentAction;
 
-    public function __construct($idUser, $idCustomer, $idExecutor = null)
+    public function __construct(string $currentStatus, int $idUser, int $idCustomer, int $idExecutor = null)
     {
+        if ($currentStatus !== self::STATUS_NEW && $currentStatus !== self::STATUS_WORKING) {
+            throw new CastomException("Нет доступных действий для этого статуса");
+        }
+        $this->currentStatus = $currentStatus;
         $this->idUser = $idUser;
         $this->idCustomer = $idCustomer;
         $this->idExecutor = $idExecutor;
     }
 
-    public function getMapStatuses()
+    public function getMapStatuses(): array
     {
         $mapStatuses =
         [
@@ -42,7 +46,7 @@ class Task
         return $mapStatuses;
     }
 
-    public function getMapActions()
+    public function getMapActions(): array
     {
         $mapActions =
         [
@@ -54,13 +58,17 @@ class Task
         return $mapActions;
     }
 
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->currentStatus;
     }
 
-    public function getAvailableActions($role)
+    public function getAvailableActions(string $role): BaseAction
     {
+        if ($role !== 'customer' && $role !== 'executor')
+        {
+            throw new CastomException("Действия может совершать только заказчик или исполнитель");
+        }
         if ($role === 'customer') {
             if ($this->currentStatus === self::STATUS_NEW) {
                 return new CancelAction($this->idUser, $this->idCustomer, $this->idExecutor);
@@ -68,7 +76,6 @@ class Task
             if ($this->currentStatus === self::STATUS_WORKING) {
                 return new DoneAction($this->idUser, $this->idCustomer, $this->idExecutor);
             }
-            return null;
         }
         if ($role === 'executor') {
             if ($this->currentStatus === self::STATUS_NEW) {
@@ -77,7 +84,6 @@ class Task
             if ($this->currentStatus === self::STATUS_WORKING) {
                 return new RefusedAction($this->idUser, $this->idCustomer, $this->idExecutor);
             }
-            return null;
         }
     }
 }

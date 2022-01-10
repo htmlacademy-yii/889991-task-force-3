@@ -4,7 +4,9 @@ USE taskforce;
 
 CREATE TABLE cities (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  city_name VARCHAR(255)
+  name VARCHAR(255),
+  lat VARCHAR(128),
+  long VARCHAR(128)
 );
 CREATE TABLE roles (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -23,8 +25,8 @@ CREATE TABLE users (
 );
 CREATE TABLE categories (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  character_code VARCHAR(128) UNIQUE,
-  category_name VARCHAR(128)
+  name VARCHAR(128),
+  icon VARCHAR(128)
 );
 CREATE TABLE tasks (
   id INT AUTO_INCREMENT PRIMARY KEY,

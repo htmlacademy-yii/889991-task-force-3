@@ -50,8 +50,8 @@ class Category extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTasks()
+    public function getTask()
     {
-        return $this->hasMany(Tasks::className(), ['category_id' => 'id']);
+        return $this->hasMany(Task::className(), ['category_id' => 'id']);
     }
 }

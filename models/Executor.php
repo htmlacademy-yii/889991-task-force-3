@@ -75,7 +75,7 @@ class Executor extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getResponses()
+    public function getResponse()
     {
         return $this->hasMany(Response::className(), ['executor_id' => 'id']);
     }
@@ -85,9 +85,9 @@ class Executor extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getReviews()
+    public function getReview()
     {
-        return $this->hasMany(Reviews::className(), ['executor_id' => 'id']);
+        return $this->hasMany(Review::className(), ['executor_id' => 'id']);
     }
 
     /**
@@ -95,8 +95,8 @@ class Executor extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getUserTaskforce()
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(UserTaskforce::className(), ['id' => 'user_id']);
     }
 }

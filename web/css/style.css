@@ -538,7 +538,7 @@ template {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  height: 59px;
+  height: 84px;
   border-bottom: 1px solid #d6d6d6;
   padding: 15px 12px; }
 

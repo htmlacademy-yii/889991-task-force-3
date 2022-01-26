@@ -48,8 +48,8 @@ class Role extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUsers()
+    public function getUserTaskforce()
     {
-        return $this->hasMany(Users::className(), ['role_id' => 'id']);
+        return $this->hasMany(UserTaskforce::className(), ['role_id' => 'id']);
     }
 }

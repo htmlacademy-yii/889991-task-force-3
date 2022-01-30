@@ -54,9 +54,9 @@ class City extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTasks()
+    public function getTask()
     {
-        return $this->hasMany(Tasks::className(), ['city_id' => 'id']);
+        return $this->hasMany(Task::className(), ['city_id' => 'id']);
     }
 
     /**
@@ -64,8 +64,8 @@ class City extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUsers()
+    public function getUserTaskforce()
     {
-        return $this->hasMany(Users::className(), ['city_id' => 'id']);
+        return $this->hasMany(UserTaskforce::className(), ['city_id' => 'id']);
     }
 }

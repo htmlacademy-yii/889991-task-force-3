@@ -60,7 +60,7 @@ class Response extends \yii\db\ActiveRecord
      */
     public function getExecutor()
     {
-        return $this->hasOne(Executors::className(), ['id' => 'executor_id']);
+        return $this->hasOne(Executor::className(), ['id' => 'executor_id']);
     }
 
     /**
@@ -70,6 +70,6 @@ class Response extends \yii\db\ActiveRecord
      */
     public function getTask()
     {
-        return $this->hasOne(Tasks::className(), ['id' => 'task_id']);
+        return $this->hasOne(Task::className(), ['id' => 'task_id']);
     }
 }

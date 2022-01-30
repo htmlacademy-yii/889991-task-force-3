@@ -71,7 +71,7 @@ class UserTaskforce extends \yii\db\ActiveRecord
      */
     public function getCity()
     {
-        return $this->hasOne(Cities::className(), ['id' => 'city_id']);
+        return $this->hasOne(City::className(), ['id' => 'city_id']);
     }
 
     /**
@@ -79,9 +79,9 @@ class UserTaskforce extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getExecutors()
+    public function getExecutor()
     {
-        return $this->hasMany(Executors::className(), ['user_id' => 'id']);
+        return $this->hasMany(Executor::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -89,9 +89,9 @@ class UserTaskforce extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getReviews()
+    public function getReview()
     {
-        return $this->hasMany(Reviews::className(), ['user_id' => 'id']);
+        return $this->hasMany(Review::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -101,7 +101,7 @@ class UserTaskforce extends \yii\db\ActiveRecord
      */
     public function getRole()
     {
-        return $this->hasOne(Roles::className(), ['id' => 'role_id']);
+        return $this->hasOne(Role::className(), ['id' => 'role_id']);
     }
 
     /**
@@ -109,8 +109,8 @@ class UserTaskforce extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTasks()
+    public function getTask()
     {
-        return $this->hasMany(Tasks::className(), ['user_id' => 'id']);
+        return $this->hasMany(Task::className(), ['user_id' => 'id']);
     }
 }

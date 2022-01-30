@@ -82,7 +82,7 @@ class Task extends \yii\db\ActiveRecord
      */
     public function getCategory()
     {
-        return $this->hasOne(Categories::className(), ['id' => 'category_id']);
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 
     /**
@@ -92,7 +92,7 @@ class Task extends \yii\db\ActiveRecord
      */
     public function getCity()
     {
-        return $this->hasOne(Cities::className(), ['id' => 'city_id']);
+        return $this->hasOne(City::className(), ['id' => 'city_id']);
     }
 
     /**
@@ -100,9 +100,9 @@ class Task extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getFiles()
+    public function getFile()
     {
-        return $this->hasMany(Files::className(), ['task_id' => 'id']);
+        return $this->hasMany(File::className(), ['task_id' => 'id']);
     }
 
     /**
@@ -110,7 +110,7 @@ class Task extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getResponses()
+    public function getResponse()
     {
         return $this->hasMany(Response::className(), ['task_id' => 'id']);
     }
@@ -120,9 +120,9 @@ class Task extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getReviews()
+    public function getReview()
     {
-        return $this->hasMany(Reviews::className(), ['task_id' => 'id']);
+        return $this->hasMany(Review::className(), ['task_id' => 'id']);
     }
 
     /**
@@ -130,8 +130,8 @@ class Task extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getUserTaskforce()
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(UserTaskforce::className(), ['id' => 'user_id']);
     }
 }

@@ -64,7 +64,7 @@ class Review extends \yii\db\ActiveRecord
      */
     public function getExecutor()
     {
-        return $this->hasOne(Executors::className(), ['id' => 'executor_id']);
+        return $this->hasOne(Executor::className(), ['id' => 'executor_id']);
     }
 
     /**
@@ -74,7 +74,7 @@ class Review extends \yii\db\ActiveRecord
      */
     public function getTask()
     {
-        return $this->hasOne(Tasks::className(), ['id' => 'task_id']);
+        return $this->hasOne(Task::className(), ['id' => 'task_id']);
     }
 
     /**
@@ -82,8 +82,8 @@ class Review extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getUserTaskforce()
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(UserTaskforce::className(), ['id' => 'user_id']);
     }
 }

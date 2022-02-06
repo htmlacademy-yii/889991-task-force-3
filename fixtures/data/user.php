@@ -8,7 +8,7 @@ return [
         'user_password' => 'tQpGOY[',
     ],
     'user1' => [
-        'user_name' => 'Шубинаа София Владимировна',
+        'user_name' => 'Шубина София Владимировна',
         'email' => 'boleslav49@yandex.ru',
         'city_id' => 462,
         'user_password' => 'o>,#m^X2:#GChq',
@@ -20,13 +20,13 @@ return [
         'user_password' => '#b4hr">',
     ],
     'user3' => [
-        'user_name' => 'Ульяна Алексеевна Костинаа',
+        'user_name' => 'Ульяна Алексеевна Костина',
         'email' => 'sofy66@belousova.ru',
         'city_id' => 163,
         'user_password' => 'dW#^sj4Pm\'N',
     ],
     'user4' => [
-        'user_name' => 'Рожкова Борис Сергеевич',
+        'user_name' => 'Рожков Борис Сергеевич',
         'email' => 'valerii51@zueva.org',
         'city_id' => 14,
         'user_password' => '7-N$3cWo#1C>Y~<8z*',

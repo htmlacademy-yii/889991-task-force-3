@@ -9,6 +9,7 @@ use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -33,7 +34,7 @@ AppAsset::register($this);
          <div class="nav-wrapper">
             <ul class="nav-list">
                <li class="list-item list-item--active">
-                  <a class="link link--nav">Новое</a>
+                  <a class="link link--nav" href="<?= Url::to(['tasks/index']) ?>">Новое</a>
                </li>
                <li class="list-item">
                   <a href="#" class="link link--nav">Мои задания</a>

@@ -1018,7 +1018,9 @@ template {
 .price--big {
   font-size: 48px;
   margin-top: 35px;
-  margin-bottom: 32px; }
+  margin-bottom: 32px;
+  flex-shrink: 0;
+ }
 
 .task-description {
   padding: 30px 26px;

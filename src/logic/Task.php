@@ -32,7 +32,7 @@ class Task
         $this->idExecutor = $idExecutor;
     }
 
-    public function getMapStatuses(): array
+    public static function getMapStatuses($taskStatus): string
     {
         $mapStatuses =
         [
@@ -43,7 +43,7 @@ class Task
             self::STATUS_FAILED => 'Провалено'
         ];
 
-        return $mapStatuses;
+        return $mapStatuses[$taskStatus];
     }
 
     public function getMapActions(): array

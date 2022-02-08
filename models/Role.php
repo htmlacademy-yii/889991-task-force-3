@@ -50,6 +50,6 @@ class Role extends \yii\db\ActiveRecord
      */
     public function getUserTaskforce()
     {
-        return $this->hasMany(UserTaskforce::className(), ['role_id' => 'id']);
+        return $this->hasMany(User::className(), ['role_id' => 'id']);
     }
 }

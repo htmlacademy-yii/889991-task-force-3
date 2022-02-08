@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
    
 $this->title = 'Задания';
@@ -11,10 +12,10 @@ $this->title = 'Задания';
          <?php foreach ($tasks as $task): ?>
          <div class="task-card">
             <div class="header-task">
-               <a  href="#" class="link link--block link--big">
-                  <?= $task->title ?>
+               <a  href="<?= Url::to(['tasks/view', 'id' => $task->id]) ?>" class="link link--block link--big">
+                  <?= Html::encode($task->title) ?>
                </a>
-               <p class="price price--task"><?= $task->budget ?> ₽</p>
+               <p class="price price--task"><?= Html::encode($task->budget) ?> ₽</p>
             </div>
             <p class="info-text">
                <span class="current-time">
@@ -25,17 +26,17 @@ $this->title = 'Задания';
                </span>
             </p>
             <p class="task-text">
-               <?= $task->task_description ?>
+               <?= Html::encode($task->task_description) ?>
             </p>
             <div class="footer-task">
                <p class="info-text town-text">
                <?php if (isset($task->city->name)): ?>
-                   <?= $task->city->name ?>
+                   <?= Html::encode($task->city->name) ?>
                <?php else: ?>
                   Удаленная работа    
                <?php endif; ?>    
                </p>
-                <p class="info-text category-text"><?= $task->category->name ?></p>
+                <p class="info-text category-text"><?= Html::encode($task->category->name) ?></p>
                 <a href="#" class="button button--black">Смотреть Задание</a>
             </div>
         </div>

@@ -19,7 +19,7 @@ $this->title = 'Просмотр задания';
          </p>
         <a href="#" class="button button--blue">Откликнуться на задание</a>
         <div class="task-map">
-            <img class="map" src="img/map.png"  width="725" height="346" alt="Новый арбат, 23, к. 1">
+            <img class="map" src="/img/map.png"  width="725" height="346" alt="Новый арбат, 23, к. 1">
             <p class="map-address town">
             <?php if (isset($task->city->name)): ?>
                    <?= Html::encode($task->city->name) ?>
@@ -31,7 +31,7 @@ $this->title = 'Просмотр задания';
         </div>
         <h4 class="head-regular">Отклики на задание</h4>
         <div class="response-card">
-            <img class="customer-photo" src="img/man-glasses.png" width="146" height="156" alt="Фото заказчиков">
+            <img class="customer-photo" src="/img/man-glasses.png" width="146" height="156" alt="Фото заказчиков">
             <div class="feedback-wrapper">
                 <a href="<?= Url::to(['user/view', 'id' => 1]) ?>" class="link link--block link--big">Астахов Павел</a>
                 <div class="response-wrapper">
@@ -53,7 +53,7 @@ $this->title = 'Просмотр задания';
             </div>
         </div>
         <div class="response-card">
-            <img class="customer-photo" src="img/man-sweater.png" width="146" height="156" alt="Фото заказчиков">
+            <img class="customer-photo" src="/img/man-sweater.png" width="146" height="156" alt="Фото заказчиков">
             <div class="feedback-wrapper">
                 <a href="<?= Url::to(['user/view', 'id' => 2]) ?>" class="link link--block link--big">Дмитриев Андрей</a>
                 <div class="response-wrapper">

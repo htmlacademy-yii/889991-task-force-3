@@ -66,6 +66,6 @@ class City extends \yii\db\ActiveRecord
      */
     public function getUserTaskforce()
     {
-        return $this->hasMany(UserTaskforce::className(), ['city_id' => 'id']);
+        return $this->hasMany(User::className(), ['city_id' => 'id']);
     }
 }

@@ -97,6 +97,6 @@ class Executor extends \yii\db\ActiveRecord
      */
     public function getUserTaskforce()
     {
-        return $this->hasOne(UserTaskforce::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }

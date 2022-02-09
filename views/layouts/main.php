@@ -9,6 +9,7 @@ use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -28,12 +29,12 @@ AppAsset::register($this);
    <header class="page-header">
       <nav class="main-nav">
          <a href='#' class="header-logo">
-            <img class="logo-image" src="img/logotype.png" width=227 height=60 alt="taskforce">
+            <img class="logo-image" src="/img/logotype.png" width=227 height=60 alt="taskforce">
          </a>
          <div class="nav-wrapper">
             <ul class="nav-list">
                <li class="list-item list-item--active">
-                  <a class="link link--nav">Новое</a>
+                  <a class="link link--nav" href="<?= Url::to(['tasks/index']) ?>">Новое</a>
                </li>
                <li class="list-item">
                   <a href="#" class="link link--nav">Мои задания</a>
@@ -49,7 +50,7 @@ AppAsset::register($this);
       </nav>
       <div class="user-block">
          <a href="#">
-            <img class="user-photo" src="img/man-glasses.png" width="55" height="55" alt="Аватар">
+            <img class="user-photo" src="/img/man-glasses.png" width="55" height="55" alt="Аватар">
          </a>
          <div class="user-menu">
             <p class="user-name">Василий</p>

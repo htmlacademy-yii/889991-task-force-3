@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-
+use app\models\City;
 /**
  * This is the model class for table "users".
  *
@@ -23,6 +23,7 @@ use Yii;
  */
 class User extends \yii\db\ActiveRecord
 {
+   public $password_repeat;
     /**
      * {@inheritdoc}
      */
@@ -37,14 +38,15 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['date_registration'], 'safe'],
-            [['email'], 'required'],
-            [['city_id', 'role_id'], 'integer'],
-            [['user_name', 'email'], 'string', 'max' => 128],
-            [['user_password'], 'string', 'max' => 255],
-            [['email'], 'unique'],
-            [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cities::className(), 'targetAttribute' => ['city_id' => 'id']],
-            [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Roles::className(), 'targetAttribute' => ['role_id' => 'id']],
+            [['date_registration', 'role_id'], 'safe'],
+            [['user_name', 'email', 'city_id', 'user_password', 'password_repeat'], 'required'],
+            [['user_name', 'email'], 'string', 'length' => [2, 128]],
+            [['email'], 'email'],
+            [['email'], 'unique', 'targetClass' => User::class],
+            [['user_password'], 'string', 'length' => [6, 128]],
+            [['password_repeat'], 'compare', 'compareAttribute' => 'user_password'],
+            [['city_id'], 'integer'],
+            [['city_id'], 'exist', 'targetClass' => City::class, 'targetAttribute' => 'id'],
         ];
     }
 
@@ -56,11 +58,12 @@ class User extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'date_registration' => 'Date Registration',
-            'user_name' => 'User Name',
+            'user_name' => 'Ваше имя',
             'email' => 'Email',
-            'city_id' => 'City ID',
-            'user_password' => 'User Password',
-            'role_id' => 'Role ID',
+            'city_id' => 'Город',
+            'user_password' => 'Пароль',
+            'password_repeat' => 'Повтор пароля',
+            'role_id' => 'я собираюсь откликаться на заказы',
         ];
     }
 

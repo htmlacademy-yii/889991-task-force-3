@@ -27,4 +27,21 @@ class UserController extends Controller
 
       return $this->render('view', ['user' => $user]);
    }
+
+   public function actionSignup() 
+   {
+      $user = new User();
+      if (Yii::$app->request->getIsPost()) {
+         $user->load(Yii::$app->request->post());
+         if ($user->validate()) {
+            $user->user_password = Yii::$app->security->generatePasswordHash($user->user_password);
+            $user->save(false);
+            $this->redirect('/tasks'); 
+            
+         }
+      }
+      $cities = City::find()->all();
+
+      return $this->render('signup', ['model' => $user, 'cities'=> $cities]);
+   }
 }

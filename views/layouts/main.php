@@ -28,7 +28,7 @@ AppAsset::register($this);
 
    <header class="page-header">
       <nav class="main-nav">
-         <a href='#' class="header-logo">
+         <a href='<?= Url::to('/tasks') ?>' class="header-logo">
             <img class="logo-image" src="/img/logotype.png" width=227 height=60 alt="taskforce">
          </a>
          <?php if (Url::current() !== Url::to(['user/signup'])) : ?>
@@ -56,7 +56,11 @@ AppAsset::register($this);
             <img class="user-photo" src="/img/man-glasses.png" width="55" height="55" alt="Аватар">
          </a>
          <div class="user-menu">
-            <p class="user-name">Василий</p>
+            <p class="user-name">
+            <?php if (isset(Yii::$app->user->identity->user_name)): ?>
+               <?= Html::encode(Yii::$app->user->identity->user_name); ?>
+            <?php endif; ?>
+            </p>
             <div class="popup-head">
                <ul class="popup-menu">
                   <li class="menu-item">
@@ -66,7 +70,7 @@ AppAsset::register($this);
                      <a href="#" class="link">Связаться с нами</a>
                   </li>
                   <li class="menu-item">
-                     <a href="#" class="link">Выход из системы</a>
+                     <a href="<?= Url::to('/user/logout'); ?>" class="link">Выход из системы</a>
                   </li>
                </ul>
             </div>

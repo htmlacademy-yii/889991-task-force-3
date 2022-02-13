@@ -13,9 +13,27 @@ use yii\web\Controller;
 use app\controllers\AppController;
 use yii\db\Expression;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 
 class UserController extends Controller 
 {
+   public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['view'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['view'],
+                        'roles' => ['@']
+                    ]
+                ]
+            ]
+        ];
+    }
+
    public function actionView($id)
    {
       $user = User::find()
@@ -44,4 +62,10 @@ class UserController extends Controller
 
       return $this->render('signup', ['model' => $user, 'cities'=> $cities]);
    }
+
+   public function actionLogout()
+    {
+        \Yii::$app->user->logout();
+        return $this->redirect('/landing');
+    }
 }

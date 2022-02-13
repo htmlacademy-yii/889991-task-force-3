@@ -13,7 +13,7 @@ use app\controllers\AppController;
 use yii\db\Expression;
 use yii\web\NotFoundHttpException;
 
-class TasksController extends Controller 
+class TasksController extends SecuredController 
 {
    public function actionIndex()
    {

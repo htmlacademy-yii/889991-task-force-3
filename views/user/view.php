@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
    
-$this->title = 'Просмотр задания';
+$this->title = 'Просмотр профиля исполнителя';
 
 ?>
 

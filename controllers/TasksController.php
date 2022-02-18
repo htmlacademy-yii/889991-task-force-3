@@ -4,14 +4,17 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Task;
+use app\models\User;
 use app\models\Category;
 use app\models\TaskSearchForm;
 use app\models\City;
+use app\models\File;
 use app\models\Response;
 use yii\web\Controller;
 use app\controllers\AppController;
 use yii\db\Expression;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 class TasksController extends SecuredController 
 {
@@ -59,7 +62,7 @@ class TasksController extends SecuredController
       ]);
    }
 
-   public function actionView ($id) 
+   public function actionView($id) 
    {
       $task = Task::find()
          ->joinWith('city', 'category')
@@ -73,5 +76,34 @@ class TasksController extends SecuredController
       return $this->render('view', [
          'task' => $task
       ]);
+   }
+
+   public function actionFormalization() 
+   {
+      $model = new Task;
+
+      $categories = Category::find()->all();
+
+      if (Yii::$app->request->isPost) {
+         $model->load(\Yii::$app->request->post());
+         $model->files = UploadedFile::getInstances($model, 'files');
+         if ($model->validate()) {
+            $model->user_id = Yii::$app->user->identity->id;
+            $model->save();
+            if (isset($model->files)) {
+               foreach ($model->files as $file) {
+                  $user_file = new File;
+                  $user_file->task_id = $model->id;
+                  $user_file->file_path = 'uploads/' . $file->baseName . '.' . $file->extension;
+                  $user_file->save();
+                  $file->saveAs('uploads/' . $file->baseName . '.' . $file->extension);
+            }
+            }
+            $this->redirect('/tasks/view/' . $model->id);
+         }
+         
+     }
+
+      return $this->render('formalization', ['model' => $model, 'categories' => $categories]);
    }
 }

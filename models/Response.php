@@ -9,15 +9,16 @@ use Yii;
  *
  * @property int $id
  * @property int|null $task_id
- * @property int|null $executor_id
- * @property int|null $prise
+ * @property int|null $user_id
+ * @property int|null $price
  * @property string|null $coment
  *
- * @property Executors $executor
- * @property Tasks $task
+ * @property User $user
+ * @property Task $task
  */
 class Response extends \yii\db\ActiveRecord
 {
+   
     /**
      * {@inheritdoc}
      */
@@ -32,10 +33,12 @@ class Response extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['task_id', 'executor_id', 'prise'], 'integer'],
-            [['coment'], 'string'],
-            [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tasks::className(), 'targetAttribute' => ['task_id' => 'id']],
-            [['executor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Executors::className(), 'targetAttribute' => ['executor_id' => 'id']],
+            [['prise'], 'safe'],
+            [['prise'], 'required', 'message' => 'Поле "Цена" необходимо заполнить'],
+            [['task_id', 'user_id', 'prise'], 'integer'],
+            [['coment'], 'trim'],
+            [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::className(), 'targetAttribute' => ['task_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -47,8 +50,8 @@ class Response extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'task_id' => 'Task ID',
-            'executor_id' => 'Executor ID',
-            'prise' => 'Prise',
+            'user_id' => 'User ID',
+            'prise' => 'Price',
             'coment' => 'Coment',
         ];
     }
@@ -58,9 +61,9 @@ class Response extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getExecutor()
+    public function getUser()
     {
-        return $this->hasOne(Executor::className(), ['id' => 'executor_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     /**

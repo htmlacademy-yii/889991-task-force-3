@@ -1,7 +1,7 @@
 <?php
 namespace Taskforce\logic;
 
-class RefusedAction extends BaseAction
+class RejectionAction extends BaseAction
 {
     public function verificationRights($idUser, $idCustomer, $idExtcutor)
     {
@@ -18,6 +18,6 @@ class RefusedAction extends BaseAction
 
     public function getInteralName()
     {
-        return 'refused';
+        return 'rejection';
     }
 }

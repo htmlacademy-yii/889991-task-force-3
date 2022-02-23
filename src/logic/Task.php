@@ -63,26 +63,26 @@ class Task
         return $this->currentStatus;
     }
 
-    public function getAvailableActions(string $role): BaseAction
+    public function getAvailableActions(string $role)
     {
         if ($role !== 'customer' && $role !== 'executor')
         {
             throw new CastomException("Действия может совершать только заказчик или исполнитель");
         }
         if ($role === 'customer') {
-            if ($this->currentStatus === self::STATUS_NEW) {
-                return new CancelAction($this->idUser, $this->idCustomer, $this->idExecutor);
+            if ($this->currentStatus === self::STATUS_NEW && $this->idUser === $this->idCustomer) {
+                return $this->currentAction = self::ACTION_CANCEL;
             }
-            if ($this->currentStatus === self::STATUS_WORKING) {
-                return new DoneAction($this->idUser, $this->idCustomer, $this->idExecutor);
+            if ($this->currentStatus === self::STATUS_WORKING && $this->idUser === $this->idCustomer) {
+                return $this->currentAction = self::ACTION_DONE;
             }
         }
         if ($role === 'executor') {
             if ($this->currentStatus === self::STATUS_NEW) {
-                return new RespondAction($this->idUser, $this->idCustomer, $this->idExecutor);
+                return $this->currentAction = self::ACTION_RESPOND;
             }
-            if ($this->currentStatus === self::STATUS_WORKING) {
-                return new RefusedAction($this->idUser, $this->idCustomer, $this->idExecutor);
+            if ($this->currentStatus === self::STATUS_WORKING && $this->idUser === $this->idExecutor) {
+                return $this->currentAction = self::ACTION_REFUSED;
             }
         }
     }

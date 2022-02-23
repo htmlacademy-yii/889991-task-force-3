@@ -16,8 +16,14 @@ $this->title = 'Просмотр задания';
         </div>
         <p class="task-description">
         <?= Html::encode($task->task_description) ?>
-         </p>
-        <a href="#" class="button button--blue">Откликнуться на задание</a>
+        </p>
+        <?php 
+            $name = $action->currentAction;
+            $mapActions = $action->getmapActions();
+        ?>
+        <?php if (isset($name)): ?>     
+        <a href="#" class="button button--blue action-btn" data-action="<?= $name; ?>"><?= $mapActions[$name]; ?></a>
+        <?php endif; ?>
         <div class="task-map">
             <img class="map" src="/img/map.png"  width="725" height="346" alt="Новый арбат, 23, к. 1">
             <p class="map-address town">
@@ -29,51 +35,35 @@ $this->title = 'Просмотр задания';
             </p>
             <p class="map-address">Новый арбат, 23, к. 1</p>
         </div>
+        <?php if (count($responses) > 0): ?>
         <h4 class="head-regular">Отклики на задание</h4>
+        <?php foreach ($responses as $response): ?>
         <div class="response-card">
             <img class="customer-photo" src="/img/man-glasses.png" width="146" height="156" alt="Фото заказчиков">
             <div class="feedback-wrapper">
-                <a href="<?= Url::to(['user/view', 'id' => 1]) ?>" class="link link--block link--big">Астахов Павел</a>
+                <a href="<?= Url::to("/user/view/{$response->user_id}"); ?>" class="link link--block link--big"><?= Html::encode($response->user->user_name) ?></a>
                 <div class="response-wrapper">
                     <div class="stars-rating small"><span class="fill-star">&nbsp;</span><span class="fill-star">&nbsp;</span><span class="fill-star">&nbsp;</span><span class="fill-star">&nbsp;</span><span>&nbsp;</span></div>
                     <p class="reviews">2 отзыва</p>
                 </div>
                 <p class="response-message">
-                    Могу сделать всё в лучшем виде. У меня есть необходимый опыт и инструменты.
+                <?= Html::encode($response->coment) ?>
                 </p>
-
             </div>
             <div class="feedback-wrapper">
-                <p class="info-text"><span class="current-time">25 минут </span>назад</p>
-                <p class="price price--small">3700 ₽</p>
+                <p class="info-text"><span class="current-time"><?= Yii::$app->formatter->format($response->date_response,'relativeTime') ?></span></p>
+                <p class="price price--small"><?= Html::encode($response->prise) ?> ₽</p>
             </div>
+            <?php if (Yii::$app->user->id === $task->user_id && $task->task_status == 'new' && $response->status == 'new'): ?>
             <div class="button-popup">
-                <a href="#" class="button button--blue button--small">Принять</a>
-                <a href="#" class="button button--orange button--small">Отказать</a>
+                <a href="<?= Url::to(['tasks/accept', 'id' => $response->id ]); ?>" class="button button--blue button--small">Принять</a>
+                <a href="<?= Url::to(['tasks/refuse', 'id' => $response->id ]); ?>" class="button button--orange button--small">Отказать</a>
             </div>
+            <?php endif; ?>
         </div>
-        <div class="response-card">
-            <img class="customer-photo" src="/img/man-sweater.png" width="146" height="156" alt="Фото заказчиков">
-            <div class="feedback-wrapper">
-                <a href="<?= Url::to(['user/view', 'id' => 2]) ?>" class="link link--block link--big">Дмитриев Андрей</a>
-                <div class="response-wrapper">
-                    <div class="stars-rating small"><span class="fill-star">&nbsp;</span><span class="fill-star">&nbsp;</span><span class="fill-star">&nbsp;</span><span class="fill-star">&nbsp;</span><span>&nbsp;</span></div>
-                    <p class="reviews">8 отзывов</p>
-                </div>
-                <p class="response-message">
-                    Примусь за выполнение задания в течение часа, сделаю быстро и качественно.
-                </p>
-
-            </div>
-            <div class="feedback-wrapper">
-                <p class="info-text"><span class="current-time">2 часа </span>назад</p>
-                <p class="price price--small">1999 ₽</p>
-            </div>
-            <div class="button-popup">
-                <a href="#" class="button button--blue button--small">Принять</a>
-                <a href="#" class="button button--orange button--small">Отказать</a>
-            </div>
-        </div>
+        <?php endforeach; ?>
+        <?php endif; ?>
+        
     </div>
     <div class="right-column">
         <div class="right-card black info-card">
@@ -106,3 +96,47 @@ $this->title = 'Просмотр задания';
         </div>
     </div>
 </main>
+<div class="regular-form pop-up pop-up--respond pop-up--close">
+   <?php $form = ActiveForm::begin([
+      'id' => 'response',
+      'options' => ['autocomplete' => 'of'],
+      ]) ?>
+   <div class="half-wrapper">
+      <div class="form-group">
+         <?= $form->field($model, 'prise')->input('number')->label('Цена', ['class' => 'control-label']); ?>
+      </div>
+   </div>
+   <div class="form-group">
+      <?= $form->field($model, 'coment')->textarea()->label('Ваш коментарий', ['class' => 'control-label']); ?>   
+   </div>
+   <?= Html::submitButton('Откликнуться', ['class' => 'button button--blue']) ?>
+   <?php ActiveForm::end() ?>
+</div>
+<div class="regular-form pop-up pop-up--done pop-up--close">
+   <?php $form = ActiveForm::begin([
+      'id' => 'done',
+      'options' => ['autocomplete' => 'of'],
+      ]) ?>
+   <div class="half-wrapper">
+      <div class="form-group">
+         <?= $form->field($done, 'rating')->input('number')->label('Оценка', ['class' => 'control-label']); ?>
+      </div>
+   </div>
+   <div class="form-group">
+      <?= $form->field($done, 'coment')->textarea()->label('Оставьте отзыв', ['class' => 'control-label']); ?>   
+   </div>
+   <?= Html::submitButton('Задание завершено', ['class' => 'button button--blue']) ?>
+   <?php ActiveForm::end() ?>
+</div>
+<div class="regular-form pop-up pop-up--rejection pop-up--close">
+   <h2>Вы действительно хотите отказаться от задания?</h2>
+   <a href="<?= Url::to(['tasks/view/' . $task->id ]); ?>" class="button button--blue">Я передумал, продолжаю</a>
+   <a href="<?= Url::to(['tasks/rejection', 'id' => $task->id ]); ?>" class="button button--blue">Отказаться от задания</a>
+</div>
+<div class="regular-form pop-up pop-up--cancel pop-up--close">
+   <h2>Вы действительно хотите отменить задание?</h2>
+   <a href="<?= Url::to(['tasks/view/' . $task->id ]); ?>" class="button button--blue">Нет, пусть еще повисит</a>
+   <a href="<?= Url::to(['tasks/cancel', 'id' => $task->id ]); ?>" class="button button--blue">Отказаться от задания</a>
+</div>
+
+<div class="overlay"></div>

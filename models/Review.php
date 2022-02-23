@@ -34,11 +34,13 @@ class Review extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'task_id', 'executor_id', 'rating'], 'integer'],
-            [['coment'], 'string'],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
-            [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tasks::className(), 'targetAttribute' => ['task_id' => 'id']],
-            [['executor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Executors::className(), 'targetAttribute' => ['executor_id' => 'id']],
+            [['user_id', 'task_id', 'executor_id'], 'integer'],
+            [['rating'], 'integer', 'min' => 1, 'max' => 5],
+            [['rating', 'coment'], 'required', 'message' => 'Поле необходимо заполнить!'],
+            [['coment'], 'string', 'length' => [5, 1500]],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::className(), 'targetAttribute' => ['task_id' => 'id']],
+            [['executor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Executor::className(), 'targetAttribute' => ['executor_id' => 'id']],
         ];
     }
 
@@ -52,8 +54,8 @@ class Review extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'task_id' => 'Task ID',
             'executor_id' => 'Executor ID',
-            'coment' => 'Coment',
-            'rating' => 'Rating',
+            'coment' => 'Отзыв',
+            'rating' => 'Оценка',
         ];
     }
 

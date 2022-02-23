@@ -70,7 +70,7 @@ LandingAsset::register($this);
                <p>Сломался кран на кухне? Надо отправить документы? Нет времени самому гулять с собакой?
                    У нас вы быстро найдёте исполнителя для любой жизненной ситуации?<br>
                    Быстро, безопасно и с гарантией. Просто, как раз, два, три. </p>
-               <button class="button">Создать аккаунт</button>
+               <a href="<?= Url::to('user/signup') ?>" class="button">Создать аккаунт</a>
            </div>
            <div class="landing-center">
                <div class="landing-instruction">
@@ -178,7 +178,7 @@ LandingAsset::register($this);
                         <a href="">Исполнители</a>
                     </li>
                     <li class="links__item">
-                        <a href="">Регистрация</a>
+                        <a href="<?= Url::to('user/signup') ?>">Регистрация</a>
                     </li>
                     <li class="links__item">
                         <a href="">Создать задание</a>

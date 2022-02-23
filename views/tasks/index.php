@@ -19,10 +19,7 @@ $this->title = 'Задания';
             </div>
             <p class="info-text">
                <span class="current-time">
-                  <?= Yii::$app->formatter->format(
-                     $task->date_creation,
-                     'relativeTime'
-                  ) ?>
+               <?= Yii::$app->formatter->asRelativeTime($task->date_creation); ?>
                </span>
             </p>
             <p class="task-text">
@@ -37,7 +34,7 @@ $this->title = 'Задания';
                <?php endif; ?>    
                </p>
                 <p class="info-text category-text"><?= Html::encode($task->category->name) ?></p>
-                <a href="#" class="button button--black">Смотреть Задание</a>
+                <a href="<?= Url::to(['tasks/view', 'id' => $task->id]) ?>" class="button button--black">Смотреть Задание</a>
             </div>
         </div>
         <?php endforeach; ?>

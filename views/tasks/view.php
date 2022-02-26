@@ -25,15 +25,15 @@ $this->title = 'Просмотр задания';
         <a href="#" class="button button--blue action-btn" data-action="<?= $name; ?>"><?= $mapActions[$name]; ?></a>
         <?php endif; ?>
         <div class="task-map">
-            <img class="map" src="/img/map.png"  width="725" height="346" alt="Новый арбат, 23, к. 1">
+            <div class="map" id="map"></div>
             <p class="map-address town">
-            <?php if (isset($task->city->name)): ?>
-                   <?= Html::encode($task->city->name) ?>
+            <?php if (isset($task->task_location)): ?>
+                   <?= Html::encode($task->task_location) ?>
                <?php else: ?>
                   Удаленная работа    
                <?php endif; ?>
             </p>
-            <p class="map-address">Новый арбат, 23, к. 1</p>
+            <!--<p class="map-address">Новый арбат, 23, к. 1</p>-->
         </div>
         <?php if (count($responses) > 0): ?>
         <h4 class="head-regular">Отклики на задание</h4>
@@ -140,3 +140,14 @@ $this->title = 'Просмотр задания';
 </div>
 
 <div class="overlay"></div>
+<script type="text/javascript">
+        ymaps.ready(init);
+        function init(){
+            var myMap = new ymaps.Map("map", {
+                center: [<?= $task->long; ?>, <?= $task->lat; ?>],
+                zoom: 17
+            });
+            var myPlacemark = new ymaps.Placemark([<?= $task->long; ?>, <?= $task->lat; ?>]);
+            myMap.geoObjects.add(myPlacemark);
+        }
+    </script>

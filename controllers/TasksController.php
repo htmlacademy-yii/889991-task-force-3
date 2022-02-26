@@ -16,6 +16,12 @@ use app\controllers\AppController;
 use yii\db\Expression;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\BadResponseException;
+use yii\helpers\ArrayHelper;
+
+//require_once 'vendor/autoload.php';
 
 class TasksController extends SecuredController 
 {
@@ -106,7 +112,8 @@ class TasksController extends SecuredController
          $action = new \Taskforce\logic\Task($task->task_status, $id, $task->user_id, $task->executor_id);
          $action->getAvailableActions($user->role->role_name);
       }
-      
+      //echo AppController::debug($user->role->role_name);
+      //die;
       return $this->render('view', [
          'task' => $task,
          'model' => $model,
@@ -172,6 +179,28 @@ class TasksController extends SecuredController
          $model->load(\Yii::$app->request->post());
          $model->files = UploadedFile::getInstances($model, 'files');
          if ($model->validate()) {
+            $client = new Client(['base_uri' => 'https://geocode-maps.yandex.ru/1.x',]);
+            try {
+               $response = $client->request('GET', 'https://geocode-maps.yandex.ru/1.x', [
+                  'query' => [
+                     'apikey' => 'e666f398-c983-4bde-8f14-e3fec900592a', 
+                     'geocode' => $model->task_location,
+                     'format' => 'json',
+                     ]
+               ]);
+               if ($response->getStatusCode() !== 200) {
+                  throw new BadResponseException("Response error: " . $response->getReasonPhrase(), $request);
+               }
+               $content = $response->getBody()->getContents();
+               $response_data = json_decode($content, true);
+               $value = ArrayHelper::getValue($response_data, 'response.GeoObjectCollection.featureMember.0.GeoObject.Point.pos');
+               $coordinates = explode(" ", $value);
+               $model->lat = $coordinates[0];
+               $model->long = $coordinates[1];
+               
+            } catch (RequestException $e) {
+               error_log('Геолокация не определена');
+           }
             $model->user_id = Yii::$app->user->identity->id;
             $model->save();
             if (isset($model->files)) {

@@ -54,6 +54,7 @@ class UserController extends Controller
          if ($user->validate()) {
             $user->user_password = Yii::$app->security->generatePasswordHash($user->user_password);
             $user->save(false);
+            \Yii::$app->user->login($user);
             $this->redirect('/tasks'); 
             
          }

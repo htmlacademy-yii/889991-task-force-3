@@ -3,6 +3,7 @@
 use app\assets\LandingAsset;
 use yii\helpers\Url;
 use yii\bootstrap4\Html;
+use yii\authclient\widgets\AuthChoice;
 
 LandingAsset::register($this);
 ?>
@@ -59,6 +60,12 @@ LandingAsset::register($this);
                 <a href="<?= Url::to('user/signup') ?>" class="header__account-registration">
                     Регистрация
                 </a>
+                <p>Войти через ВКонтакте
+                <?= yii\authclient\widgets\AuthChoice::widget([
+                     'baseAuthUrl' => ['user/auth'],
+                     'popupMode' => false,
+                ]) ?>
+                </p>
             </div>
         </div>
     </header>

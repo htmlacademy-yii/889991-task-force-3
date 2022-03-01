@@ -58,6 +58,16 @@ $config = [
             ],
         ],
         
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' => [
+               'vkontakte' => [
+                  'class' => 'yii\authclient\clients\VKontakte',
+                  'clientId' => '8089697',
+                  'clientSecret' => 'sbNVORMcbVcLRksNpf2l',
+               ],
+            ],
+        ],
     ],
     'params' => $params,
     'controllerMap' => [
